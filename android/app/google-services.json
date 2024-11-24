@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "512214754614",
+    "project_id": "backup-d74f0",
+    "storage_bucket": "backup-d74f0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512214754614:android:c77356b8a28f1240c9bf97",
+        "android_client_info": {
+          "package_name": "com.backup.restaurante"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQDv3fhGVKTqznU7UOAKTMgKJVAco9Wkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
