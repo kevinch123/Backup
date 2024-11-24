@@ -1,4 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/widgets.dart' as pw;
 import '../services/database_helper.dart';
 import '../models/product.dart';
 import '../models/invoice.dart';
@@ -67,13 +70,32 @@ Future<void> saveInvoiceToDatabase(Invoice invoice) async {
   clearInvoice();
 }
 
+  // Cambiamos a un tipo Future<String> que devolverá la ruta del archivo PDF
+  static Future<String> createPDF(double totalDay, int numInvoices) async {
+    final pdf = pw.Document();
+    
+    // Aquí puedes agregar el contenido del PDF (texto, imágenes, etc.)
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Text('Total del Día: \$${totalDay.toStringAsFixed(2)}\nNúmero de Facturas: $numInvoices'),
+          );
+        },
+      ),
+    );
 
+    // Obtener el directorio de la aplicación para guardar el PDF
+    final outputDirectory = await getTemporaryDirectory();
+    final filePath = '${outputDirectory.path}/reporte_diario.pdf';
 
-  // Obtener el historial de facturas desde la base de datos
-  Future<List<Invoice>> getInvoiceHistory() async {
-    return await DatabaseHelper().getInvoices();
+    // Guardar el archivo PDF
+    final file = File(filePath);
+    await file.writeAsBytes(await pdf.save());
+
+    // Retornar la ruta del archivo PDF generado
+    return filePath;
   }
-
   
 
   // Getters

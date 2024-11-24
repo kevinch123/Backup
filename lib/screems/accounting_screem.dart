@@ -1,12 +1,15 @@
-import 'package:backup/services/database_helper.dart';
+import 'package:backup/controller/email_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:backup/controller/invoice_controller.dart';
+import 'package:backup/services/database_helper.dart';
 import '../models/invoice.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class AccountingScreen extends StatefulWidget {
-  
   @override
   _AccountingScreenState createState() => _AccountingScreenState();
 }
+
 class _AccountingScreenState extends State<AccountingScreen> {
   double totalDay = 0.0; // Total calculado dinámicamente
   List<Invoice> invoices = []; // Lista de facturas del día
@@ -17,21 +20,30 @@ class _AccountingScreenState extends State<AccountingScreen> {
     _fetchData();
   }
 
-Future<void> _fetchData() async {
-  final dbHelper = DatabaseHelper();
-  final fetchedInvoices = await dbHelper.getInvoices();
+  Future<void> _fetchData() async {
+    final dbHelper = DatabaseHelper();
+    final fetchedInvoices = await dbHelper.getInvoices();
 
-  print('Facturas recuperadas:');
-  fetchedInvoices.forEach((invoice) {
-    print('Subtotal: ${invoice.subtotal}, Total: ${invoice.total}');
-  });
+    print('Facturas recuperadas:');
+    fetchedInvoices.forEach((invoice) {
+      print('Subtotal: ${invoice.subtotal}, Total: ${invoice.total}');
+    });
 
-  setState(() {
-    invoices = fetchedInvoices;
-    totalDay = fetchedInvoices.fold(0.0, (sum, invoice) => sum + invoice.total);
-  });
-}
+    setState(() {
+      invoices = fetchedInvoices;
+      totalDay = fetchedInvoices.fold(0.0, (sum, invoice) => sum + invoice.total);
+    });
+  }
 
+  // Método para generar el PDF y enviarlo por correo
+  Future<void> _sendEmailWithPDF() async {
+    // Primero generamos el PDF y obtenemos la ruta
+    final pdfPath = await InvoiceController.createPDF(totalDay, invoices.length);
+    
+    // Enviar el correo con el PDF adjunto
+    final emailController = EmailController();
+    emailController.sendEmailWithAttachment(pdfPath);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +57,15 @@ Future<void> _fetchData() async {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ElevatedButton(
-              onPressed: () {
-                // Navegar a la pantalla de historial de facturas
-                Navigator.pushNamed(context, '/factura_history');
+              onPressed: _sendEmailWithPDF,  // Llamar al método para generar el PDF y enviarlo por correo
+              child: Text('Enviar por correo'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                await InvoiceController.createPDF(totalDay, invoices.length);
               },
-              child: Text('Historial de Facturas'),
+              child: Text('Generar PDF'),
             ),
             SizedBox(height: 20),
             Text(
