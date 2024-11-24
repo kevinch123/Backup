@@ -6,7 +6,7 @@ class EmailController {
     final Email email = Email(
       body: 'Este es el reporte generado.',
       subject: 'Reporte Diario',
-      recipients: ['kevinchi78@gmail.com'], // Cambia con la dirección del destinatario
+      recipients: ['chachinoykevin@gmail.com'], // Cambia con la dirección del destinatario
       attachmentPaths: [pdfPath], // Ruta del archivo PDF
       isHTML: false,
     );

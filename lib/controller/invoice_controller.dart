@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:pdf/pdf.dart';
 import '../services/database_helper.dart';
 import '../models/product.dart';
 import '../models/invoice.dart';
@@ -47,7 +49,6 @@ class InvoiceController with ChangeNotifier {
   }
 
   Invoice generateInvoice(List<Product> cartItems) {
-    // Calcula el total basado en el descuento adicional
     double subtotal = cartItems.fold(0, (sum, item) => sum + item.price * item.quantity);
     double total = subtotal * (1 - _discount);
     return Invoice(
@@ -58,28 +59,28 @@ class InvoiceController with ChangeNotifier {
     );
   }
 
+  // Guardar la factura en la base de datos
+  Future<void> saveInvoiceToDatabase(Invoice invoice) async {
+    await DatabaseHelper().insertInvoice(invoice);
+    clearInvoice();
+  }
 
-  // Persistir la factura generada en la base de datos
-//Future<void> saveInvoiceToDatabase() async {
-  //final invoice = generateInvoice(_invoiceItems);  // Genera la factura con subtotal y total calculados
-  //await DatabaseHelper().insertInvoice(invoice);  // Guarda la factura en la base de datos
-  //clearInvoice();  // Limpia la factura después de guardarla
-//}
-Future<void> saveInvoiceToDatabase(Invoice invoice) async {
-  await DatabaseHelper().insertInvoice(invoice);
-  clearInvoice();
-}
-
-  // Cambiamos a un tipo Future<String> que devolverá la ruta del archivo PDF
+  // Método para crear el PDF con la fuente personalizada
   static Future<String> createPDF(double totalDay, int numInvoices) async {
     final pdf = pw.Document();
-    
-    // Aquí puedes agregar el contenido del PDF (texto, imágenes, etc.)
+
+    // Cargar la fuente personalizada
+    final fontRegular = await _loadFont('assets/fonts/Roboto-Regular.ttf'); // Correcta ruta
+
+    // Crear el PDF con la fuente personalizada
     pdf.addPage(
       pw.Page(
         build: (pw.Context context) {
           return pw.Center(
-            child: pw.Text('Total del Día: \$${totalDay.toStringAsFixed(2)}\nNúmero de Facturas: $numInvoices'),
+            child: pw.Text(
+              'Total del Día: \$${totalDay.toStringAsFixed(2)}\nNúmero de Facturas: $numInvoices',
+              style: pw.TextStyle(font: fontRegular, fontSize: 18),
+            ),
           );
         },
       ),
@@ -96,7 +97,16 @@ Future<void> saveInvoiceToDatabase(Invoice invoice) async {
     // Retornar la ruta del archivo PDF generado
     return filePath;
   }
-  
+
+  // Método para cargar la fuente desde los activos
+  static Future<pw.Font> _loadFont(String assetPath) async {
+    final byteData = await rootBundle.load(assetPath); // Cargar el archivo de la fuente
+    final fontData = byteData.buffer.asUint8List(); // Convertir ByteData a lista de bytes
+    final byteDataForFont = ByteData.sublistView(fontData); // Convertir a ByteData
+    return pw.Font.ttf(byteDataForFont); // Pasar como ByteData
+  }
+
+
 
   // Getters
   List<Product> get invoiceItems => _invoiceItems;

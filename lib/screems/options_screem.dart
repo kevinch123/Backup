@@ -3,6 +3,7 @@ import 'package:backup/controller/products_controller.dart';
 import 'package:backup/screems/ordersumarypage_screem.dart';
 import 'package:backup/screems/tipos_menu/bebidas_screem.dart';
 import 'package:backup/screems/tipos_menu/fastfood_screem.dart';
+import 'package:backup/screems/tipos_menu/icecream_screem.dart';  // Asegúrate de importar la página de IceCream
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +62,24 @@ class Options extends StatelessWidget {
 
               // Botón Heladería
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  try {
+                    // Obtiene los productos de helados
+                    final iceCreams = await menuController.fetchProductsByType('Heladería');
+
+                    // Navegar a la página de IceCream pasando los productos
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => IceCreamPage(iceCreams: iceCreams),
+                      ),
+                    );
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error al cargar helados: $e')),
+                    );
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
@@ -116,7 +134,6 @@ class Options extends StatelessWidget {
                 ),
                 child: Text('Fast Food'),
               ),
-
               SizedBox(height: 10),
 
               // Botón Adicionales
