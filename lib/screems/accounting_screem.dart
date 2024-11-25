@@ -46,8 +46,8 @@ class _AccountingScreenState extends State<AccountingScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Contabilidad'),
-        backgroundColor: Color(0xFF7E57C2),
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.orange,
+        foregroundColor: Colors.black,
       ),
       body: Stack(
         children: [
