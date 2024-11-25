@@ -8,32 +8,46 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BACKUP RESTAURANT'),
-        backgroundColor: Color(0xFF7E57C2),
-        foregroundColor: Colors.white
+        title: const Text('BACKUP'),
+        backgroundColor: const Color(0xFF7E57C2),
+        foregroundColor: Colors.white,
+        centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
+              const Text(
                 'Mesas',
-                style: TextStyle(fontSize: 25),
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF7E57C2),
+                ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
-              GridView.count(
+              const SizedBox(height: 20),
+              GridView.builder(
                 shrinkWrap: true,
-                crossAxisCount: 3,
-                mainAxisSpacing: 15,
-                crossAxisSpacing: 20,
-                children: List.generate(9, (index) {
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  childAspectRatio: 1,
+                ),
+                itemCount: 9,
+                itemBuilder: (context, index) {
                   return ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFBD9E84),                    foregroundColor: Colors.white,
+                      backgroundColor: const Color(0xFFBD9E84),
+                      foregroundColor: Colors.white,
                       shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                     onPressed: () {
                       Navigator.push(
@@ -43,15 +57,22 @@ class HomeScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Text('${index + 1}'),
+                    child: Text(
+                      'Mesa ${index + 1}',
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
                   );
-                }),
+                },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF1A73E8),
+                  backgroundColor: const Color(0xFF1A73E8),
                   foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -61,37 +82,59 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text('Domicilios'),
+                child: const Text(
+                  'Domicilios',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
-              SizedBox(height: 10),
-              Column(
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF4CAF50), 
-                      foregroundColor: Colors.white,
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF4CAF50),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CreationDishes()),
+                        );
+                      },
+                      child: const Text(
+                        'Crear Menú',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CreationDishes()),
-                      );
-                    },
-                    child: Text('Crear Menú'),
                   ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFFFC107), 
-                      foregroundColor: Colors.white,
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFFC107),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AccountingScreen()),
+                        );
+                      },
+                      child: const Text(
+                        'Contabilidad',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AccountingScreen()),
-                      );
-                    },
-                    child: Text('Contabilidad'),
                   ),
                 ],
               ),
