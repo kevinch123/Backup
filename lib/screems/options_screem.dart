@@ -16,10 +16,20 @@ class Options extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final buttonStyle = ElevatedButton.styleFrom(
+      backgroundColor: Color(0xFF7E57C2),
+      foregroundColor: Colors.white,
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Opciones de Mesa'),
         backgroundColor: Color(0xFF7E57C2),
+        foregroundColor: Colors.white,
         foregroundColor: Colors.white,
       ),
       body: Stack(
@@ -234,3 +244,4 @@ class Options extends StatelessWidget {
     );
   }
 }
+
