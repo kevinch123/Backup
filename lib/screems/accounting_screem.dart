@@ -63,57 +63,83 @@ class _AccountingScreenState extends State<AccountingScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF4CAF50), 
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: _sendEmailWithPDF,
-                    child: Text('Enviar por correo'),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFFFC107), 
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: () async {
-                      await InvoiceController.createPDF(totalDay, invoices.length);
-                    },
-                    child: Text('Generar PDF'),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Total del Día: \$${totalDay.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white70, 
-                    ),
-                  ),
-                  SizedBox(height: 20),
+                  // Mostrar facturas
                   Text(
                     'Últimas Facturas:',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white70, 
+                      color: Colors.white, 
                     ),
                   ),
                   Expanded(
                     child: invoices.isEmpty
-                        ? Center(child: Text('No hay facturas disponibles.', style: TextStyle(color: Colors.white70)))
+                        ? Center(child: Text('No hay facturas disponibles.', style: TextStyle(color: Colors.white)))
                         : ListView.builder(
                             itemCount: invoices.length,
                             itemBuilder: (context, index) {
                               final invoice = invoices[index];
                               return ListTile(
-                                title: Text('Factura #${index + 1}', style: TextStyle(color: Colors.white70)), 
-                                subtitle: Text('Total: \$${invoice.total}', style: TextStyle(color: Colors.white70)), 
-                                trailing: Text('Descuento: ${(invoice.discount * 100).toStringAsFixed(1)}%', style: TextStyle(color: Colors.white70)), 
+                                title: Text('Factura #${index + 1}', style: TextStyle(color: Colors.white)), 
+                                subtitle: Text('Total: \$${invoice.total}', style: TextStyle(color: Colors.white)), 
+                                trailing: Text('Descuento: ${(invoice.discount * 100).toStringAsFixed(1)}%', style: TextStyle(color: Colors.white)), 
                               );
                             },
                           ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min, 
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF03A9F4),
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8), 
+                              ),
+                              minimumSize: Size(160, 50),
+                            ),
+                            onPressed: _sendEmailWithPDF, 
+                            child: Text(
+                              'Enviar por correo',
+                              style: TextStyle(
+                                fontFamily: 'Roboto', 
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16, 
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10), 
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF4CAF50),
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24), 
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8), 
+                              ),
+                              minimumSize: Size(160, 50),
+                            ),
+                            onPressed: () async {
+                              await InvoiceController.createPDF(totalDay, invoices.length);
+                            },
+                            child: Text(
+                              'Generar PDF',
+                              style: TextStyle(
+                                fontFamily: 'Roboto', 
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16, 
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),

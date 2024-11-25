@@ -51,52 +51,88 @@ class _CreationDishesState extends State<CreationDishes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent, 
-        elevation: 0, 
+        backgroundColor: Colors.orange,
+        elevation: 0,
         title: const Text(
           'Creación de Platillos',
           style: TextStyle(
-            fontSize: 32, 
+            fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.orange, 
+            color: Colors.black,
           ),
         ),
-        centerTitle: true, 
+        centerTitle: true,
       ),
-      extendBodyBehindAppBar: true, 
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           Image.asset(
             'assets/img/parrilla.jpg',
             width: double.infinity,
             height: double.infinity,
-            fit: BoxFit.cover, 
+            fit: BoxFit.cover,
           ),
-          SafeArea( 
+          SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
                   TextField(
                     controller: _nameController,
-                    decoration: InputDecoration(labelText: 'Nombre del Producto'),
+                    style: TextStyle(color: Colors.white), 
+                    decoration: InputDecoration(
+                      labelText: 'Nombre del Producto',
+                      labelStyle: TextStyle(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white), 
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.orange), 
+                      ),
+                    ),
                   ),
+                  SizedBox(height: 10), 
                   TextField(
                     controller: _priceController,
-                    decoration: InputDecoration(labelText: 'Precio'),
+                    style: TextStyle(color: Colors.white), 
+                    decoration: InputDecoration(
+                      labelText: 'Precio',
+                      labelStyle: TextStyle(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white), 
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.orange), 
+                      ),
+                    ),
                     keyboardType: TextInputType.number,
                   ),
+                  SizedBox(height: 10),  
                   TextField(
                     controller: _imageUrlController,
-                    decoration: InputDecoration(labelText: 'URL de Imagen'),
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: 'URL de Imagen',
+                      labelStyle: TextStyle(color: Colors.white),      
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white), 
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.orange), 
+                      ),
+                    ),
                   ),
                   SizedBox(height: 10),
-                  Row(
+                                    Row(
                     children: [
-                      Text('Tipo:'),
+                      Text(
+                        'Tipo:',
+                        style: TextStyle(color: Colors.white), 
+                      ),
                       SizedBox(width: 10),
                       DropdownButton<String>(
                         value: _selectedType,
+                        dropdownColor: Colors.black, 
                         onChanged: (String? newValue) {
                           setState(() {
                             _selectedType = newValue!;
@@ -111,7 +147,10 @@ class _CreationDishesState extends State<CreationDishes> {
                         ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: Text(value),
+                            child: Text(
+                              value,
+                              style: TextStyle(color: Colors.white),
+                            ),
                           );
                         }).toList(),
                       ),
@@ -120,11 +159,21 @@ class _CreationDishesState extends State<CreationDishes> {
                   SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF7E57C2),
-                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white, 
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0), 
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15), 
                     ),
                     onPressed: _addProduct,
-                    child: Text('Agregar Producto'),
+                    child: Text(
+                      'Agregar Producto',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold, 
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -16,16 +16,16 @@ class DrinksPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Café',
+          'Bebidas',
           style: TextStyle(
-            color: Colors.white, 
+            color: Colors.black, 
           ),
         ),
-        backgroundColor: Colors.transparent, 
+        backgroundColor: Colors.orange, 
         elevation: 0, 
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.shopping_cart, color: Colors.black),
             onPressed: () {
     
               Navigator.push(
@@ -63,7 +63,7 @@ class DrinksPage extends StatelessWidget {
                         final drink = drinks[index];
                         return Card(
                           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          color: Colors.black.withOpacity(0.6), 
+                          color: Colors.white.withOpacity(0.2), 
                           child: ListTile(
                             leading: Image.network(
                               drink.imageUrl,

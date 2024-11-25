@@ -102,15 +102,12 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
               child: ElevatedButton(
                 onPressed: () async {
                   await invoiceController.saveInvoiceToDatabase(invoice);
-
                   setState(() {
                     widget.cartItems.clear();
                   });
-
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Factura guardada exitosamente.')),
                   );
-
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -118,7 +115,7 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4CAF50), 
+                  backgroundColor: const Color(0xFF4CAF50),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 40), 
                   shape: RoundedRectangleBorder(
@@ -132,7 +129,6 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                 ),
               ),
             ),
-
           ],
         ),
       ),

@@ -18,10 +18,10 @@ class CoffeePage extends StatelessWidget {
         title: Text(
           'Café',
           style: TextStyle(
-            color: Colors.white, 
+            color: Colors.black, 
           ),
         ),
-        backgroundColor: Colors.transparent, 
+        backgroundColor: Colors.orange, 
         elevation: 0, 
         actions: [
           IconButton(
@@ -65,7 +65,7 @@ class CoffeePage extends StatelessWidget {
                         final coffee = coffeeItems[index];
                         return Card(
                           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          color: Colors.black.withOpacity(0.6), 
+                          color: Colors.white.withOpacity(0.2), 
                           child: ListTile(
                             leading: Image.network(
                               coffee.imageUrl,
