@@ -103,35 +103,32 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
                 onPressed: () async {
                   await invoiceController.saveInvoiceToDatabase(invoice);
 
-                  // Vacía la lista de productos del carrito después de guardar la factura
                   setState(() {
                     widget.cartItems.clear();
                   });
 
-                  // Muestra una notificación de éxito
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Factura guardada exitosamente.')),
                   );
 
-                  // Regresa a la pantalla principal (HomeScreen)
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => HomeScreen()),
-                    (route) => false, // Esto elimina todas las pantallas anteriores
+                    (route) => false, 
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4CAF50), // Color verde
+                  backgroundColor: const Color(0xFF4CAF50), 
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 40), // Ajusta el padding
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 40), 
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12), // Bordes redondeados
+                    borderRadius: BorderRadius.circular(12), 
                   ),
-                  minimumSize: Size(200, 60), // Tamaño mínimo para el botón
+                  minimumSize: Size(200, 60), 
                 ),
                 child: Text(
                   'Guardar Factura',
-                  style: TextStyle(fontSize: 18), // Ajusta el tamaño de la fuente si es necesario
+                  style: TextStyle(fontSize: 18), 
                 ),
               ),
             ),

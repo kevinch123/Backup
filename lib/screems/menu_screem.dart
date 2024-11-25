@@ -51,66 +51,86 @@ class _CreationDishesState extends State<CreationDishes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Creación de Platillos'),
-        backgroundColor: Color(0xFF7E57C2),
-        foregroundColor: Colors.white
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(labelText: 'Nombre del Producto'),
-            ),
-            TextField(
-              controller: _priceController,
-              decoration: InputDecoration(labelText: 'Precio'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: _imageUrlController,
-              decoration: InputDecoration(labelText: 'URL de Imagen'),
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Text('Tipo:'),
-                SizedBox(width: 10),
-                DropdownButton<String>(
-                  value: _selectedType,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedType = newValue!;
-                    });
-                  },
-                  items: <String>[
-                    'Bebidas',
-                    'Comida Rapida',
-                    'Heladería',
-                    'Cafetería',
-                    'Adicionales'
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF7E57C2),
-                foregroundColor: Colors.white,
-              ),
-              onPressed: _addProduct,
-              child: Text('Agregar Producto'),
-            ),
-
-          ],
+        backgroundColor: Colors.transparent, 
+        elevation: 0, 
+        title: const Text(
+          'Creación de Platillos',
+          style: TextStyle(
+            fontSize: 32, 
+            fontWeight: FontWeight.bold,
+            color: Colors.orange, 
+          ),
         ),
+        centerTitle: true, 
+      ),
+      extendBodyBehindAppBar: true, 
+      body: Stack(
+        children: [
+          Image.asset(
+            'assets/img/parrilla.jpg',
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover, 
+          ),
+          SafeArea( 
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _nameController,
+                    decoration: InputDecoration(labelText: 'Nombre del Producto'),
+                  ),
+                  TextField(
+                    controller: _priceController,
+                    decoration: InputDecoration(labelText: 'Precio'),
+                    keyboardType: TextInputType.number,
+                  ),
+                  TextField(
+                    controller: _imageUrlController,
+                    decoration: InputDecoration(labelText: 'URL de Imagen'),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text('Tipo:'),
+                      SizedBox(width: 10),
+                      DropdownButton<String>(
+                        value: _selectedType,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedType = newValue!;
+                          });
+                        },
+                        items: <String>[
+                          'Bebidas',
+                          'Comida Rapida',
+                          'Heladería',
+                          'Cafetería',
+                          'Adicionales'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF7E57C2),
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: _addProduct,
+                    child: Text('Agregar Producto'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

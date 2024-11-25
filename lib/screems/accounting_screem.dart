@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:backup/controller/invoice_controller.dart';
 import 'package:backup/services/database_helper.dart';
 import '../models/invoice.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class AccountingScreen extends StatefulWidget {
   @override
@@ -11,8 +10,8 @@ class AccountingScreen extends StatefulWidget {
 }
 
 class _AccountingScreenState extends State<AccountingScreen> {
-  double totalDay = 0.0; // Total calculado dinámicamente
-  List<Invoice> invoices = []; // Lista de facturas del día
+  double totalDay = 0.0; 
+  List<Invoice> invoices = []; 
 
   @override
   void initState() {
@@ -35,7 +34,6 @@ class _AccountingScreenState extends State<AccountingScreen> {
     });
   }
 
-  // Método para generar el PDF y enviarlo por correo
   Future<void> _sendEmailWithPDF() async {
     final pdfPath = await InvoiceController.createPDF(totalDay, invoices.length);
     
@@ -53,14 +51,12 @@ class _AccountingScreenState extends State<AccountingScreen> {
       ),
       body: Stack(
         children: [
-          // Imagen de fondo
           Positioned.fill(
             child: Image.asset(
               'assets/img/parrilla.jpg',
               fit: BoxFit.cover,
             ),
           ),
-          // Contenido principal
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -69,7 +65,7 @@ class _AccountingScreenState extends State<AccountingScreen> {
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF4CAF50), // Color verde
+                      backgroundColor: Color(0xFF4CAF50), 
                       foregroundColor: Colors.white,
                     ),
                     onPressed: _sendEmailWithPDF,
@@ -78,7 +74,7 @@ class _AccountingScreenState extends State<AccountingScreen> {
                   SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFFFC107), // Color amarillo
+                      backgroundColor: Color(0xFFFFC107), 
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () async {
@@ -92,7 +88,7 @@ class _AccountingScreenState extends State<AccountingScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white70, // Blanco brillante
+                      color: Colors.white70, 
                     ),
                   ),
                   SizedBox(height: 20),
@@ -101,7 +97,7 @@ class _AccountingScreenState extends State<AccountingScreen> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white70, // Blanco brillante
+                      color: Colors.white70, 
                     ),
                   ),
                   Expanded(
@@ -112,9 +108,9 @@ class _AccountingScreenState extends State<AccountingScreen> {
                             itemBuilder: (context, index) {
                               final invoice = invoices[index];
                               return ListTile(
-                                title: Text('Factura #${index + 1}', style: TextStyle(color: Colors.white70)), // Blanco brillante
-                                subtitle: Text('Total: \$${invoice.total}', style: TextStyle(color: Colors.white70)), // Blanco brillante
-                                trailing: Text('Descuento: ${(invoice.discount * 100).toStringAsFixed(1)}%', style: TextStyle(color: Colors.white70)), // Blanco brillante
+                                title: Text('Factura #${index + 1}', style: TextStyle(color: Colors.white70)), 
+                                subtitle: Text('Total: \$${invoice.total}', style: TextStyle(color: Colors.white70)), 
+                                trailing: Text('Descuento: ${(invoice.discount * 100).toStringAsFixed(1)}%', style: TextStyle(color: Colors.white70)), 
                               );
                             },
                           ),

@@ -9,27 +9,27 @@ class BaseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent, // Transparente para que se vea la imagen
-        elevation: 0, // Sin sombra para un diseño limpio
+        backgroundColor: Colors.transparent, 
+        elevation: 0, 
         title: const Text(
           'Backup',
           style: TextStyle(
-            fontSize: 32, // Tamaño grande para un título destacado
-            fontWeight: FontWeight.bold, // Negrita para destacar
-            color: Colors.orange, // Color personalizado
+            fontSize: 32, 
+            fontWeight: FontWeight.bold, 
+            color: Colors.orange, 
           ),
         ),
       ),
-      extendBodyBehindAppBar: true, // Extiende el cuerpo detrás del AppBar
+      extendBodyBehindAppBar: true, 
       body: Stack(
         children: [
           Image.asset(
             'assets/img/parrilla.jpg',
             width: double.infinity,
             height: double.infinity,
-            fit: BoxFit.cover, // Asegúrate de cubrir toda la pantalla
+            fit: BoxFit.cover, 
           ),
-          SafeArea( // Asegura que el contenido no se superponga con la barra de estado
+          SafeArea( 
             child: child,
           ),
         ],

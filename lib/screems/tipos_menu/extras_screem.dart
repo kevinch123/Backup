@@ -18,16 +18,16 @@ class ExtrasPage extends StatelessWidget {
         title: Text(
           'Extras',
           style: TextStyle(
-            color: Colors.white, // Título más oscuro
+            color: Colors.white, 
           ),
         ),
-        backgroundColor: Colors.transparent, // Fondo transparente
-        elevation: 0, // Sin sombra
+        backgroundColor: Colors.transparent, 
+        elevation: 0, 
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart, color: Colors.black), // Ícono del carrito más oscuro
+            icon: Icon(Icons.shopping_cart, color: Colors.black), 
             onPressed: () {
-              // Navegar a la pantalla del carrito o resumen
+            
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -41,17 +41,16 @@ class ExtrasPage extends StatelessWidget {
           ),
         ],
       ),
-      extendBodyBehindAppBar: true, // Extiende el cuerpo detrás del AppBar
+      extendBodyBehindAppBar: true, 
       body: Stack(
         children: [
-          // Imagen de fondo
+          
           Positioned.fill(
             child: Image.asset(
-              'assets/img/parrilla.jpg', // Aquí pon la imagen que quieras usar
-              fit: BoxFit.cover, // Asegura que cubra toda la pantalla
+              'assets/img/parrilla.jpg', 
+              fit: BoxFit.cover, 
             ),
           ),
-          // Contenido principal
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -65,7 +64,7 @@ class ExtrasPage extends StatelessWidget {
                         final extra = extraItems[index];
                         return Card(
                           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          color: Colors.black.withOpacity(0.6), // Fondo oscuro con opacidad
+                          color: Colors.black.withOpacity(0.6), 
                           child: ListTile(
                             leading: Image.network(
                               extra.imageUrl,
@@ -75,14 +74,14 @@ class ExtrasPage extends StatelessWidget {
                             ),
                             title: Text(
                               extra.name,
-                              style: TextStyle(color: Colors.white), // Texto blanco para mayor contraste
+                              style: TextStyle(color: Colors.white), 
                             ),
                             subtitle: Text(
                               '\$${extra.price.toStringAsFixed(2)}',
-                              style: TextStyle(color: Colors.white), // Texto blanco
+                              style: TextStyle(color: Colors.white), 
                             ),
                             trailing: IconButton(
-                              icon: Icon(Icons.add, color: Colors.white), // Íconos blancos
+                              icon: Icon(Icons.add, color: Colors.white), 
                               onPressed: () {
                                 cartController.addToCart(extra);
                                 ScaffoldMessenger.of(context).showSnackBar(

@@ -18,21 +18,21 @@ class DrinksPage extends StatelessWidget {
         title: Text(
           'Café',
           style: TextStyle(
-            color: Colors.white, // Texto del título más oscuro (negro)
+            color: Colors.white, 
           ),
         ),
-        backgroundColor: Colors.transparent, // Fondo transparente para que se vea la imagen
-        elevation: 0, // Sin sombra
+        backgroundColor: Colors.transparent, 
+        elevation: 0, 
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              // Navegar a la pantalla del carrito o resumen
+    
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => OrderSummaryPage(
-                    tableNumber: "1", // Cambiar por la mesa correspondiente
+                    tableNumber: "1", 
                     cartItems: cartController.cartItems,
                   ),
                 ),
@@ -41,17 +41,15 @@ class DrinksPage extends StatelessWidget {
           ),
         ],
       ),
-      extendBodyBehindAppBar: true, // Extiende el cuerpo detrás del AppBar
+      extendBodyBehindAppBar: true, 
       body: Stack(
         children: [
-          // Imagen de fondo
           Positioned.fill(
             child: Image.asset(
-              'assets/img/parrilla.jpg', // Aquí pon la imagen que quieras usar
-              fit: BoxFit.cover, // Asegura que cubra toda la pantalla
+              'assets/img/parrilla.jpg', 
+              fit: BoxFit.cover, 
             ),
           ),
-          // Contenido principal
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -65,7 +63,7 @@ class DrinksPage extends StatelessWidget {
                         final drink = drinks[index];
                         return Card(
                           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          color: Colors.black.withOpacity(0.6), // Fondo más oscuro con opacidad
+                          color: Colors.black.withOpacity(0.6), 
                           child: ListTile(
                             leading: Image.network(
                               drink.imageUrl,
@@ -75,14 +73,14 @@ class DrinksPage extends StatelessWidget {
                             ),
                             title: Text(
                               drink.name,
-                              style: TextStyle(color: Colors.white), // Texto blanco para mayor contraste
+                              style: TextStyle(color: Colors.white), 
                             ),
                             subtitle: Text(
                               '\$${drink.price.toStringAsFixed(2)}',
-                              style: TextStyle(color: Colors.white), // Texto blanco
+                              style: TextStyle(color: Colors.white),
                             ),
                             trailing: IconButton(
-                              icon: Icon(Icons.add, color: Colors.white), // Íconos blancos
+                              icon: Icon(Icons.add, color: Colors.white), 
                               onPressed: () {
                                 cartController.addToCart(drink);
                                 ScaffoldMessenger.of(context).showSnackBar(
