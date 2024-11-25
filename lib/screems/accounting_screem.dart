@@ -50,6 +50,9 @@ class _AccountingScreenState extends State<AccountingScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Contabilidad'),
+        backgroundColor: Color(0xFF7E57C2),
+        foregroundColor: Colors.white
+
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -57,16 +60,25 @@ class _AccountingScreenState extends State<AccountingScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ElevatedButton(
-              onPressed: _sendEmailWithPDF,  // Llamar al método para generar el PDF y enviarlo por correo
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF4CAF50), // Morado claro
+                foregroundColor: Colors.white, // Letra blanca
+              ),
+              onPressed: _sendEmailWithPDF, // Llamar al método para generar el PDF y enviarlo por correo
               child: Text('Enviar por correo'),
             ),
             SizedBox(height: 20),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFFFC107), // Morado claro
+                foregroundColor: Colors.white, // Letra blanca
+              ),
               onPressed: () async {
                 await InvoiceController.createPDF(totalDay, invoices.length);
               },
               child: Text('Generar PDF'),
             ),
+
             SizedBox(height: 20),
             Text(
               'Total del Día: \$${totalDay.toStringAsFixed(2)}',

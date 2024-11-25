@@ -3,7 +3,9 @@ import 'package:backup/controller/products_controller.dart';
 import 'package:backup/screems/ordersumarypage_screem.dart';
 import 'package:backup/screems/tipos_menu/bebidas_screem.dart';
 import 'package:backup/screems/tipos_menu/fastfood_screem.dart';
-import 'package:backup/screems/tipos_menu/icecream_screem.dart';  // Asegúrate de importar la página de IceCream
+import 'package:backup/screems/tipos_menu/coffee_screem.dart';
+import 'package:backup/screems/tipos_menu/icecream_screem.dart';
+import 'package:backup/screems/tipos_menu/extras_screem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +19,8 @@ class Options extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Opciones de Mesa'),
+        backgroundColor: Color(0xFF7E57C2),
+        foregroundColor: Colors.white
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -50,7 +54,7 @@ class Options extends StatelessWidget {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Color(0xFF7E57C2), 
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -64,10 +68,10 @@ class Options extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    // Obtiene los productos de helados
+                    // Obtiene los productos de Firebase filtrados por tipo
                     final iceCreams = await menuController.fetchProductsByType('Heladería');
 
-                    // Navegar a la página de IceCream pasando los productos
+                    // Navegar a IceCreamPage pasando los productos
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -81,7 +85,7 @@ class Options extends StatelessWidget {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: Color(0xFF7E57C2), 
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -93,9 +97,26 @@ class Options extends StatelessWidget {
 
               // Botón Cafetería
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  try {
+                    // Obtiene los productos de Firebase filtrados por tipo
+                    final coffee = await menuController.fetchProductsByType('Cafetería');
+
+                    // Navegar a CoffeePage pasando los productos
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CoffeePage(coffeeItems: coffee),
+                      ),
+                    );
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error al cargar cafetería: $e')),
+                    );
+                  }
+                },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: Color(0xFF7E57C2), 
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -126,7 +147,7 @@ class Options extends StatelessWidget {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: Color(0xFF7E57C2), 
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -138,9 +159,26 @@ class Options extends StatelessWidget {
 
               // Botón Adicionales
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  try {
+                    // Obtiene los productos de Firebase filtrados por tipo
+                    final extras = await menuController.fetchProductsByType('Adicionales');
+
+                    // Navegar a ExtrasPage pasando los productos
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ExtrasPage(extraItems: extras),
+                      ),
+                    );
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error al cargar adicionales: $e')),
+                    );
+                  }
+                },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: Color(0xFF7E57C2), 
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -167,7 +205,7 @@ class Options extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
+                  backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),

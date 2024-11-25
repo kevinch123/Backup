@@ -8,11 +8,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Backup'),
+        title: Text('BACKUP RESTAURANT'),
+        backgroundColor: Color(0xFF7E57C2),
+        foregroundColor: Colors.white
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(  
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -22,7 +24,6 @@ class HomeScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 20),
-
               GridView.count(
                 shrinkWrap: true,
                 crossAxisCount: 3,
@@ -31,15 +32,14 @@ class HomeScreen extends StatelessWidget {
                 children: List.generate(9, (index) {
                   return ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white, 
-                      foregroundColor: Colors.black,
-                      shadowColor: Colors.transparent, 
+                      backgroundColor: Color(0xFFBD9E84),                    foregroundColor: Colors.white,
+                      shadowColor: Colors.transparent,
                     ),
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Options(tableNumber: 'Mesa ${index + 1}'), 
+                          builder: (context) => Options(tableNumber: 'Mesa ${index + 1}'),
                         ),
                       );
                     },
@@ -48,8 +48,11 @@ class HomeScreen extends StatelessWidget {
                 }),
               ),
               SizedBox(height: 20),
-
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF1A73E8),
+                  foregroundColor: Colors.white,
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -61,10 +64,13 @@ class HomeScreen extends StatelessWidget {
                 child: Text('Domicilios'),
               ),
               SizedBox(height: 10),
-
               Column(
                 children: [
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF4CAF50), 
+                      foregroundColor: Colors.white,
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -75,6 +81,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFFFFC107), 
+                      foregroundColor: Colors.white,
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,

@@ -52,6 +52,8 @@ class _CreationDishesState extends State<CreationDishes> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Creación de Platillos'),
+        backgroundColor: Color(0xFF7E57C2),
+        foregroundColor: Colors.white
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -84,7 +86,7 @@ class _CreationDishesState extends State<CreationDishes> {
                   },
                   items: <String>[
                     'Bebidas',
-                    'Fast Food',
+                    'Comida Rapida',
                     'Heladería',
                     'Cafetería',
                     'Adicionales'
@@ -99,9 +101,14 @@ class _CreationDishesState extends State<CreationDishes> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF7E57C2),
+                foregroundColor: Colors.white,
+              ),
               onPressed: _addProduct,
               child: Text('Agregar Producto'),
             ),
+
           ],
         ),
       ),
