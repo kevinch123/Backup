@@ -102,13 +102,17 @@ class _CreationDishesState extends State<CreationDishes> {
             SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF7E57C2),
+                backgroundColor: const Color(0xFF4CAF50), // Color verde
                 foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                minimumSize: Size(60, 20),
               ),
               onPressed: _addProduct,
               child: Text('Agregar Producto'),
             ),
-
           ],
         ),
       ),

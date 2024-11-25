@@ -16,204 +16,166 @@ class Options extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final buttonStyle = ElevatedButton.styleFrom(
+      backgroundColor: Color(0xFF7E57C2),
+      foregroundColor: Colors.white,
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Opciones de Mesa'),
         backgroundColor: Color(0xFF7E57C2),
-        foregroundColor: Colors.white
+        foregroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0), // Padding general para el contenido
-          child: Column(
-            children: [
-              Text(
-                'Mesa: $tableNumber', // Muestra el número de la mesa
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 20),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Mesa: $tableNumber',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 30),
 
-              // Botón Bebidas
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    // Obtiene los productos de Firebase filtrados por tipo
-                    final drinks = await menuController.fetchProductsByType('Bebidas');
+                // Botón Bebidas
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final drinks = await menuController.fetchProductsByType('Bebidas');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DrinksPage(drinks: drinks),
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error al cargar bebidas: $e')),
+                      );
+                    }
+                  },
+                  style: buttonStyle,
+                  child: Text('Bebidas', style: TextStyle(fontSize: 18)),
+                ),
+                SizedBox(height: 20),
 
-                    // Navegar a DrinksPage pasando los productos
+                // Botón Heladería
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final iceCreams = await menuController.fetchProductsByType('Heladería');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => IceCreamPage(iceCreams: iceCreams),
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error al cargar helados: $e')),
+                      );
+                    }
+                  },
+                  style: buttonStyle,
+                  child: Text('Heladería', style: TextStyle(fontSize: 18)),
+                ),
+                SizedBox(height: 20),
+
+                // Botón Cafetería
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final coffee = await menuController.fetchProductsByType('Cafetería');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CoffeePage(coffeeItems: coffee),
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error al cargar cafetería: $e')),
+                      );
+                    }
+                  },
+                  style: buttonStyle,
+                  child: Text('Cafetería', style: TextStyle(fontSize: 18)),
+                ),
+                SizedBox(height: 20),
+
+                // Botón Fast Food
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final fastFoods = await menuController.fetchProductsByType('Fast Food');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FastFoodPage(fastFoods: fastFoods),
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error al cargar Fast Food: $e')),
+                      );
+                    }
+                  },
+                  style: buttonStyle,
+                  child: Text('Fast Food', style: TextStyle(fontSize: 18)),
+                ),
+                SizedBox(height: 20),
+
+                // Botón Adicionales
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final extras = await menuController.fetchProductsByType('Adicionales');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ExtrasPage(extraItems: extras),
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error al cargar adicionales: $e')),
+                      );
+                    }
+                  },
+                  style: buttonStyle,
+                  child: Text('Adicionales', style: TextStyle(fontSize: 18)),
+                ),
+                SizedBox(height: 40),
+
+                // Botón Hecho
+                ElevatedButton(
+                  onPressed: () {
+                    final cartItems = Provider.of<Cart>(context, listen: false).cartItems;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DrinksPage(drinks: drinks),
+                        builder: (context) => OrderSummaryPage(
+                          tableNumber: tableNumber,
+                          cartItems: cartItems,
+                        ),
                       ),
                     );
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error al cargar bebidas: $e')),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF7E57C2), 
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                  },
+                  style: buttonStyle.copyWith(
+                    backgroundColor: MaterialStateProperty.all(Colors.green),
                   ),
+                  child: Text('Hecho', style: TextStyle(fontSize: 18)),
                 ),
-                child: Text('Bebidas'),
-              ),
-              SizedBox(height: 10),
-
-              // Botón Heladería
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    // Obtiene los productos de Firebase filtrados por tipo
-                    final iceCreams = await menuController.fetchProductsByType('Heladería');
-
-                    // Navegar a IceCreamPage pasando los productos
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => IceCreamPage(iceCreams: iceCreams),
-                      ),
-                    );
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error al cargar helados: $e')),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF7E57C2), 
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: Text('Heladería'),
-              ),
-              SizedBox(height: 10),
-
-              // Botón Cafetería
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    // Obtiene los productos de Firebase filtrados por tipo
-                    final coffee = await menuController.fetchProductsByType('Cafetería');
-
-                    // Navegar a CoffeePage pasando los productos
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CoffeePage(coffeeItems: coffee),
-                      ),
-                    );
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error al cargar cafetería: $e')),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF7E57C2), 
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: Text('Cafetería'),
-              ),
-              SizedBox(height: 10),
-
-              // Botón Fast Food
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    // Obtiene los productos de Firebase filtrados por tipo
-                    final fastFoods = await menuController.fetchProductsByType('Fast Food');
-
-                    // Navegar a FastFoodPage pasando los productos
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FastFoodPage(fastFoods: fastFoods),
-                      ),
-                    );
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error al cargar Fast Food: $e')),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF7E57C2), 
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: Text('Fast Food'),
-              ),
-              SizedBox(height: 10),
-
-              // Botón Adicionales
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    // Obtiene los productos de Firebase filtrados por tipo
-                    final extras = await menuController.fetchProductsByType('Adicionales');
-
-                    // Navegar a ExtrasPage pasando los productos
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ExtrasPage(extraItems: extras),
-                      ),
-                    );
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error al cargar adicionales: $e')),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF7E57C2), 
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: Text('Adicionales'),
-              ),
-              SizedBox(height: 40),
-
-              // Botón Hecho (colocado más abajo)
-              ElevatedButton(
-                onPressed: () {
-                  final cartItems = Provider.of<Cart>(context, listen: false).cartItems;
-
-                  // Navegar a la pantalla de resumen de la orden
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OrderSummaryPage(
-                        tableNumber: tableNumber, // Número real de la mesa
-                        cartItems: cartItems,
-                      ),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: Text('Hecho'),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
