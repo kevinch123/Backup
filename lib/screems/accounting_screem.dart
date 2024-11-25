@@ -37,10 +37,8 @@ class _AccountingScreenState extends State<AccountingScreen> {
 
   // Método para generar el PDF y enviarlo por correo
   Future<void> _sendEmailWithPDF() async {
-    // Primero generamos el PDF y obtenemos la ruta
     final pdfPath = await InvoiceController.createPDF(totalDay, invoices.length);
     
-    // Enviar el correo con el PDF adjunto
     final emailController = EmailController();
     emailController.sendEmailWithAttachment(pdfPath);
   }
@@ -51,61 +49,81 @@ class _AccountingScreenState extends State<AccountingScreen> {
       appBar: AppBar(
         title: Text('Contabilidad'),
         backgroundColor: Color(0xFF7E57C2),
-        foregroundColor: Colors.white
-
+        foregroundColor: Colors.white,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF4CAF50), // Morado claro
-                foregroundColor: Colors.white, // Letra blanca
-              ),
-              onPressed: _sendEmailWithPDF, // Llamar al método para generar el PDF y enviarlo por correo
-              child: Text('Enviar por correo'),
+      body: Stack(
+        children: [
+          // Imagen de fondo
+          Positioned.fill(
+            child: Image.asset(
+              'assets/img/parrilla.jpg',
+              fit: BoxFit.cover,
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFFC107), // Morado claro
-                foregroundColor: Colors.white, // Letra blanca
-              ),
-              onPressed: () async {
-                await InvoiceController.createPDF(totalDay, invoices.length);
-              },
-              child: Text('Generar PDF'),
-            ),
-
-            SizedBox(height: 20),
-            Text(
-              'Total del Día: \$${totalDay.toStringAsFixed(2)}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Últimas Facturas:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            Expanded(
-              child: invoices.isEmpty
-                  ? Center(child: Text('No hay facturas disponibles.'))
-                  : ListView.builder(
-                      itemCount: invoices.length,
-                      itemBuilder: (context, index) {
-                        final invoice = invoices[index];
-                        return ListTile(
-                          title: Text('Factura #${index + 1}'),
-                          subtitle: Text('Total: \$${invoice.total}'),
-                          trailing: Text('Descuento: ${(invoice.discount * 100).toStringAsFixed(1)}%'),
-                        );
-                      },
+          ),
+          // Contenido principal
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF4CAF50), // Color verde
+                      foregroundColor: Colors.white,
                     ),
+                    onPressed: _sendEmailWithPDF,
+                    child: Text('Enviar por correo'),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFFFFC107), // Color amarillo
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () async {
+                      await InvoiceController.createPDF(totalDay, invoices.length);
+                    },
+                    child: Text('Generar PDF'),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Total del Día: \$${totalDay.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white70, // Blanco brillante
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Últimas Facturas:',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white70, // Blanco brillante
+                    ),
+                  ),
+                  Expanded(
+                    child: invoices.isEmpty
+                        ? Center(child: Text('No hay facturas disponibles.', style: TextStyle(color: Colors.white70)))
+                        : ListView.builder(
+                            itemCount: invoices.length,
+                            itemBuilder: (context, index) {
+                              final invoice = invoices[index];
+                              return ListTile(
+                                title: Text('Factura #${index + 1}', style: TextStyle(color: Colors.white70)), // Blanco brillante
+                                subtitle: Text('Total: \$${invoice.total}', style: TextStyle(color: Colors.white70)), // Blanco brillante
+                                trailing: Text('Descuento: ${(invoice.discount * 100).toStringAsFixed(1)}%', style: TextStyle(color: Colors.white70)), // Blanco brillante
+                              );
+                            },
+                          ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

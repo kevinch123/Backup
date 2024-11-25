@@ -33,6 +33,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - assets/img/parrilla.jpg
+
   # Fuentes personalizadas
   fonts:
     - family: Roboto

@@ -1,4 +1,5 @@
 import 'package:backup/screems/accounting_screem.dart';
+import 'package:backup/screems/base_scream.dart';
 import 'package:backup/screems/menu_screem.dart';
 import 'package:backup/screems/options_screem.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +7,8 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('BACKUP'),
-        backgroundColor: const Color(0xFF7E57C2),
-        foregroundColor: Colors.white,
-        centerTitle: true,
-      ),
-      body: Padding(
+    return BaseScreen(
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
@@ -53,7 +48,8 @@ class HomeScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Options(tableNumber: 'Mesa ${index + 1}'),
+                          builder: (context) =>
+                              Options(tableNumber: 'Mesa ${index + 1}'),
                         ),
                       );
                     },
